@@ -13,6 +13,7 @@ import java.util.List;
 public interface ReaderMapper {
     @Generated
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "memberships", ignore = true)
     @Mapping(target = "joined", ignore = true)
     @Mapping(target = "departed", ignore = true)
     Reader modelToEntity(NewReader newReader);
