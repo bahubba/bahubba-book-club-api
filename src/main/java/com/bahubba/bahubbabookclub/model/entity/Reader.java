@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -42,6 +43,9 @@ public class Reader {
 
     @Column
     private String title;
+
+    @OneToMany(mappedBy = "reader", fetch = FetchType.LAZY)
+    private Set<BookClubMembership> memberships;
 
     @Column(nullable = false)
     @NotNull
