@@ -69,7 +69,8 @@ public class Reader implements UserDetails, Serializable {
     @Column(nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Builder.Default
+    private Role role = Role.USER;
 
     @Column(nullable = false)
     @NotNull
@@ -82,7 +83,7 @@ public class Reader implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return departed != null;
     }
 
     @Override

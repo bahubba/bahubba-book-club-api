@@ -1,10 +1,11 @@
 package com.bahubba.bahubbabookclub.model.payload;
 
-import lombok.Getter;
-import org.springframework.stereotype.Component;
+import lombok.*;
 
-@Getter
-@Component
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NewReader {
     private String username;
     private String email;
@@ -13,4 +14,5 @@ public class NewReader {
     private String surname;
     private String suffix;
     private String title;
+    private String password;
 }
