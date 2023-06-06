@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -18,7 +20,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookClub {
+public class BookClub implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.UUID)

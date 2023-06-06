@@ -1,10 +1,18 @@
 package com.bahubba.bahubbabookclub.model.entity;
 
+import com.bahubba.bahubbabookclub.model.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -14,7 +22,10 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reader {
+public class Reader implements UserDetails, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(nullable = false, unique = true)
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -54,4 +65,39 @@ public class Reader {
 
     @Column
     private LocalDateTime departed;
+
+    @Column(nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Role role = Role.USER;
+
+    @Column(nullable = false)
+    @NotNull
+    private String password;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return departed != null;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }
