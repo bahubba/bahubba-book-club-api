@@ -8,13 +8,14 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
         jdbc:
           time_zone: UTC
     hibernate:
       ddl-auto: validate
     show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
   security:
     user:
       name: ${BOOK_CLUB_USER_NAME
@@ -27,3 +28,7 @@ logging:
 
 server:
   port: ${BOOK_CLUB_APP_PORT:8000}
+
+app:
+  properties:
+    secret_key: ${BOOK_CLUB_SECRET_KEY}

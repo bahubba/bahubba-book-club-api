@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookClubMembership {
+public class BookClubMembership implements Serializable {
+    Long serialVersionUID = 1L;
+
     @Id
     @ManyToOne
     @JoinColumn(name = "book_club_id", referencedColumnName = "id")
