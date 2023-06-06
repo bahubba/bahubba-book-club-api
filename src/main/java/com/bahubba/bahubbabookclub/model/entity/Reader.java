@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -22,7 +23,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reader implements UserDetails, Serializable {
-    Long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @Column(nullable = false, unique = true)
