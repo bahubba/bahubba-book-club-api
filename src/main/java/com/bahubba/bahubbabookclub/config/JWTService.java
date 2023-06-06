@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-@Log4j2
 public class JWTService {
     @Value("${app.properties.secret_key}")
     private String SECRET_KEY;
@@ -56,7 +55,6 @@ public class JWTService {
     }
 
     private Key getSignInKey() {
-        log.info("SECRET_KEY: " + SECRET_KEY); // DELETEME
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }

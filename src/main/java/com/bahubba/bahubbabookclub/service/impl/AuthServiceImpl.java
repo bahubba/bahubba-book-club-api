@@ -9,14 +9,12 @@ import com.bahubba.bahubbabookclub.model.payload.NewReader;
 import com.bahubba.bahubbabookclub.repository.ReaderRepo;
 import com.bahubba.bahubbabookclub.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@Log4j2
 public class AuthServiceImpl implements AuthService {
 
     private final ReaderRepo readerRepo;
@@ -29,7 +27,6 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthDTO register(NewReader newReader) {
         Reader reader = readerMapper.modelToEntity(newReader);
-        log.info("reader: " + reader);
         reader = readerRepo.save(reader);
 
         String jwtToken = jwtService.generateToken(reader);
