@@ -1,5 +1,6 @@
 package com.bahubba.bahubbabookclub.service.impl;
 
+import com.bahubba.bahubbabookclub.exception.BookClubNotFoundException;
 import com.bahubba.bahubbabookclub.model.dto.BookClubDTO;
 import com.bahubba.bahubbabookclub.model.entity.BookClub;
 import com.bahubba.bahubbabookclub.model.mapper.BookClubMapper;
@@ -33,7 +34,9 @@ public class BookClubServiceImpl implements BookClubService {
 
     @Override
     public BookClubDTO findByID(UUID id) {
-        return bookClubMapper.entityToDTO(bookClubRepo.findById(id).orElseThrow(EntityExistsException::new));
+        return bookClubMapper.entityToDTO(
+            bookClubRepo.findById(id).orElseThrow(() -> new BookClubNotFoundException(id))
+        );
     }
 
     @Override
@@ -43,7 +46,7 @@ public class BookClubServiceImpl implements BookClubService {
 
     @Override
     public BookClubDTO disbandBookClub(UUID id) {
-        BookClub bookClub = bookClubRepo.findById(id).orElseThrow(EntityExistsException::new);
+        BookClub bookClub = bookClubRepo.findById(id).orElseThrow(() -> new BookClubNotFoundException(id));
         bookClub.setDisbanded(LocalDateTime.now());
         return bookClubMapper.entityToDTO(bookClubRepo.save(bookClub));
     }

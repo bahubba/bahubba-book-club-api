@@ -1,5 +1,6 @@
 package com.bahubba.bahubbabookclub.service.impl;
 
+import com.bahubba.bahubbabookclub.exception.ReaderNotFoundException;
 import com.bahubba.bahubbabookclub.model.dto.ReaderDTO;
 import com.bahubba.bahubbabookclub.model.entity.Reader;
 import com.bahubba.bahubbabookclub.model.mapper.ReaderMapper;
@@ -32,7 +33,7 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public ReaderDTO findByID(UUID id) {
-        return readerMapper.entityToDTO(readerRepo.findById(id).orElseThrow(EntityNotFoundException::new));
+        return readerMapper.entityToDTO(readerRepo.findById(id).orElseThrow(() -> new ReaderNotFoundException(id)));
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public ReaderDTO removeReader(UUID id) {
-        Reader reader = readerRepo.findById(id).orElseThrow(EntityNotFoundException::new);
+        Reader reader = readerRepo.findById(id).orElseThrow(() -> new ReaderNotFoundException(id));
         reader.setDeparted(LocalDateTime.now());
         return readerMapper.entityToDTO(readerRepo.save(reader));
     }
