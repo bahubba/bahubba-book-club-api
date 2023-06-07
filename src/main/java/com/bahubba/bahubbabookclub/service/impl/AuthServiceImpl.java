@@ -1,6 +1,7 @@
 package com.bahubba.bahubbabookclub.service.impl;
 
 import com.bahubba.bahubbabookclub.config.JWTService;
+import com.bahubba.bahubbabookclub.exception.ReaderNotFoundException;
 import com.bahubba.bahubbabookclub.model.dto.AuthDTO;
 import com.bahubba.bahubbabookclub.model.entity.Reader;
 import com.bahubba.bahubbabookclub.model.mapper.ReaderMapper;
@@ -37,9 +38,8 @@ public class AuthServiceImpl implements AuthService {
     public AuthDTO authenticate(AuthRequest req) {
         authManager.authenticate(new UsernamePasswordAuthenticationToken(req.getUsernameOrEmail(), req.getPassword()));
 
-        // TODO - Custom exception
         Reader reader = readerRepo.findByUsernameOrEmail(req.getUsernameOrEmail(), req.getUsernameOrEmail())
-            .orElseThrow();
+            .orElseThrow(() -> new ReaderNotFoundException(req.getUsernameOrEmail()));
 
         String jwtToken = jwtService.generateToken(reader);
 
